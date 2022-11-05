@@ -7,7 +7,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
       initialRoute: '/home',
-      routes: {
-        '/home': (_) => ContactList(),
-        '/ContactForm': (_) => ContactForm()
-      },
+      routes: {'/home': (_) => ContactList(), '/ContactForm': (_) => ContactForm()},
     );
   }
 }
