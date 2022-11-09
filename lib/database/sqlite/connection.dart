@@ -6,7 +6,7 @@ class Connection {
   static late Database _db;
 
   static Future<Database> get() async {
-    String path = join(await getDatabasesPath(), 'banco1');
+    String path = join(await getDatabasesPath(), 'banco2');
     _db = await openDatabase(
       path,
       version: 1,
