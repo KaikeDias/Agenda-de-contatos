@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/database/script.dart';
-import 'package:path/path.dart';
+import 'package:flutter_application_1/database/sqlite/connection.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ContactList extends StatelessWidget {
   Future<List<Map<String, dynamic>>> _fetch() async {
-    String path = join(await getDatabasesPath(), 'banco');
-
-    Database db = await openDatabase(path, version: 1, onCreate: (db, v) async {
-      await db.execute(createTable);
-      await db.execute(insert1);
-      await db.execute(insert2);
-      await db.execute(insert3);
-    });
-    return await db.query('contact');
+    Database db = await Connection.get();
+    return db.query('contact');
   }
 
   @override
@@ -30,11 +22,10 @@ class ContactList extends StatelessWidget {
         ),
         body: FutureBuilder(
             future: _fetch(),
-            builder: (context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-              print(snapshot.hasData);
-
+            builder:
+                (context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
               if (snapshot.hasData) {
-                var lista = snapshot.data;
+                var lista = snapshot.data!;
                 return ListView.builder(
                   itemCount: lista.length,
                   itemBuilder: (context, i) {
@@ -50,8 +41,10 @@ class ContactList extends StatelessWidget {
                         width: 100,
                         child: Row(
                           children: [
-                            IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
-                            IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
+                            IconButton(
+                                onPressed: () {}, icon: Icon(Icons.edit)),
+                            IconButton(
+                                onPressed: () {}, icon: Icon(Icons.delete)),
                           ],
                         ),
                       ),
